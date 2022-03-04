@@ -1,4 +1,4 @@
-package com.bakigoal.easy
+package com.bakigoal.medium
 
 data class ListNode(var `val`: Int, var next: ListNode? = null) {
     override fun toString(): String {

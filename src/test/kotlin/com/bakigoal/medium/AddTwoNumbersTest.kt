@@ -1,4 +1,4 @@
-package com.bakigoal.easy
+package com.bakigoal.medium
 
 import org.junit.jupiter.api.Test
 
