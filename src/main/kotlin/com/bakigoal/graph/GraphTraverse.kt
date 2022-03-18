@@ -31,18 +31,15 @@ fun <T : Comparable<T>> bfs(
     queue.addLast(node)
 
     while (queue.isNotEmpty()) {
-        val size = queue.size
-        for (i in 1..size) {
-            val current = queue.removeFirst()
-            if (visited.contains(current)) {
-                continue
-            }
-            action.accept(current.data)
-            visited += current
+        val current = queue.removeFirst()
+        if (visited.contains(current)) {
+            continue
+        }
+        action.accept(current.data)
+        visited += current
 
-            for (adjacent in adjacentListSupplier.apply(current)) {
-                queue.addLast(adjacent)
-            }
+        for (adjacent in adjacentListSupplier.apply(current)) {
+            queue.addLast(adjacent)
         }
     }
 }
