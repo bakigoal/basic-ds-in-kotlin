@@ -1,5 +1,7 @@
 package com.bakigoal.trees
 
+import java.util.function.Consumer
+
 class BinarySearchTree<T : Comparable<T>>(rootData: T) {
     private var root: Node<T>? = Node(rootData)
 
@@ -74,9 +76,9 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
         }
     }
 
-    fun levelOrderTraversal() = levelOrderTraversal(root)
+    fun levelOrderTraversal(action: Consumer<T>) = levelOrderTraversal(root, action)
 
-    private fun levelOrderTraversal(root: Node<T>?) {
+    private fun levelOrderTraversal(root: Node<T>?, action: Consumer<T>) {
         if (root == null) {
             return
         }
@@ -89,7 +91,7 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
             val left = current.left
             val right = current.right
 
-            println(current.value)
+            action.accept(current.value)
             if (left != null) queue.addLast(left)
             if (right != null) queue.addLast(right)
         }
@@ -145,5 +147,5 @@ fun main() {
     println()
     println("min: ${bst.min().value}")
     println("max: ${bst.max().value}")
-    bst.levelOrderTraversal()
+    bst.levelOrderTraversal { println("value $it") }
 }
