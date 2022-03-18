@@ -9,14 +9,17 @@ fun printTree(root: Node<Int>) {
 }
 
 fun printTree(root: Node<Int>, depth: Int, isLeft: Boolean, prefix: String) {
-    if (root.right != null) {
-        printTree(root.right, depth + 1, false, prefix + if (isLeft) "│   " else "    ")
+    val right = root.right
+    val left = root.left
+
+    if (right != null) {
+        printTree(right, depth + 1, false, prefix + if (isLeft) "│   " else "    ")
     }
 
     println(prefix + (if (isLeft) "└── " else "┌── ")  + root.value)
 
-    if (root.left != null) {
-        printTree(root.left, depth + 1, true, prefix + if (isLeft) "    " else "│   ")
+    if (left != null) {
+        printTree(left, depth + 1, true, prefix + if (isLeft) "    " else "│   ")
     }
 }
 
