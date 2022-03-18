@@ -29,16 +29,18 @@ fun <T : Comparable<T>> bfs(
     val visited = mutableSetOf<GraphNode<T>>()
     val queue = ArrayDeque<GraphNode<T>>()
     queue.addLast(node)
+    visited += node
 
     while (queue.isNotEmpty()) {
         val current = queue.removeFirst()
-        if (visited.contains(current)) {
-            continue
-        }
+
         action.accept(current.data)
-        visited += current
 
         for (adjacent in adjacentListSupplier.apply(current)) {
+            if (visited.contains(adjacent)) {
+                continue
+            }
+            visited += adjacent
             queue.addLast(adjacent)
         }
     }
