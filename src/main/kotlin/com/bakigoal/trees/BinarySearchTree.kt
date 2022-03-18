@@ -104,32 +104,3 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
         return root.toString()
     }
 }
-
-fun main() {
-    val bst = BinarySearchTree(4)
-    bst.insert(2)
-    bst.insert(3)
-    bst.insert(1)
-    bst.insert(6)
-    bst.insert(5)
-    bst.insert(7)
-
-    println(bst.toString())
-
-    println("min: ${bst.min().value}")
-    println("max: ${bst.max().value}")
-    println()
-
-    print("level order traversal: ")
-    bst.levelOrderTraversal { print("$it ") }
-    println()
-    print("pre order traversal: ")
-    bst.preOrderTraversal() { print("$it ") }
-    println()
-    print("in order traversal: ")
-    bst.inOrderTraversal() { print("$it ") }
-    println()
-    print("post order traversal: ")
-    bst.postOrderTraversal() { print("$it ") }
-    println()
-}
