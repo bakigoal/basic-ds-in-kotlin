@@ -69,10 +69,10 @@ internal class BinarySearchTreeTest {
 
     @Test
     fun lowestAncestor() {
-        assertEquals(4, bst.lowestCommonAncestor(1, 5)?.value)
-        assertEquals(2, bst.lowestCommonAncestor(1, 3)?.value)
-        assertEquals(6, bst.lowestCommonAncestor(6, 7)?.value)
-        assertEquals(4, bst.lowestCommonAncestor(3, 5)?.value)
+        assertEquals(4, bst.lowestCommonAncestor(1, 5))
+        assertEquals(2, bst.lowestCommonAncestor(1, 3))
+        assertEquals(6, bst.lowestCommonAncestor(6, 7))
+        assertEquals(4, bst.lowestCommonAncestor(3, 5))
     }
 
     @Test

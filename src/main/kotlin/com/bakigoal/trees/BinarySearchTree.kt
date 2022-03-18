@@ -57,7 +57,7 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
     }
 
     fun lowestCommonAncestor(nodeValue1: T, nodeValue2: T) =
-        lowestCommonAncestor(root, Node(nodeValue1), Node(nodeValue2))
+        lowestCommonAncestor(root, Node(nodeValue1), Node(nodeValue2))?.value
 
     private fun lowestCommonAncestor(root: Node<T>?, node1: Node<T>, node2: Node<T>): Node<T>? {
         if (root == null) {
