@@ -46,15 +46,28 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
                 root.right == null -> root.left
                 // case 3 : Two children
                 else -> {
-                    var minRight: Node<T> = root.right!!
-                    while (minRight.left != null) {
-                        minRight = minRight.left!!
-                    }
-                    root.copy(value = minRight.value, right = delete(root.right, minRight.value))
+                    val rightMin: Node<T> = min(root.right!!)
+                    root.copy(value = rightMin.value, right = delete(root.right, rightMin.value))
                 }
             }
         }
         return root
+    }
+
+    fun min() = min(root!!)
+
+    private fun min(node: Node<T>): Node<T> {
+        var left = node
+        while (left.left != null) left = left.left!!
+        return left
+    }
+
+    fun max() = max(root!!)
+
+    private fun max(node: Node<T>): Node<T> {
+        var right = node
+        while (right.right != null) right = right.right!!
+        return right
     }
 
     override fun toString(): String {
@@ -77,6 +90,13 @@ fun main() {
     println(bst.toString())
 
     bst.delete(42)
+    bst.delete(33)
+    bst.delete(99)
+    bst.delete(1)
 
     println(bst.toString())
+
+    println()
+    println("min: ${bst.min().value}")
+    println("max: ${bst.max().value}")
 }
