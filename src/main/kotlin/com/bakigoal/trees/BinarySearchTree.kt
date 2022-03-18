@@ -1,7 +1,7 @@
 package com.bakigoal.trees
 
 class BinarySearchTree<T : Comparable<T>>(rootData: T) {
-    val root: Node<T> = Node(rootData)
+    private val root: Node<T> = Node(rootData)
 
     fun insert(data: T) = insert(root, Node(data))
 
@@ -23,22 +23,36 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
         }
     }
 
-    fun inOrderPrint(root: Node<T>?) {
+    fun delete(value: T) = delete(root, value)
+
+    private fun delete(root: Node<T>?, value: T) {
         if (root == null) {
             return
         }
-        inOrderPrint(root.left)
-        print("[ ${root.value} ] ")
-        inOrderPrint(root.right)
+
+        var node = root
+
+        while (true) {
+            when {
+                value < node.value -> delete(root.left, value)
+                value > node.value -> delete(root.right, value)
+                else -> {
+                    // case 1: leaf
+                    if (isLeaf(root)) {
+//                        root = null
+                    }
+                }
+            }
+        }
+
+
+
     }
 
-    fun preOrderPrint(root: Node<T>?) {
-        if (root == null) {
-            return
-        }
-        print("[ ${root.value} ] ")
-        inOrderPrint(root.left)
-        inOrderPrint(root.right)
+    private fun isLeaf(root: Node<T>) = root.left == null && root.right == null
+
+    override fun toString(): String {
+        return root.toString()
     }
 }
 
@@ -53,8 +67,5 @@ fun main() {
     bst.insert(32)
     bst.insert(77)
 
-    printTree(bst.root)
-    bst.inOrderPrint(bst.root)
-    println()
-    bst.preOrderPrint(bst.root)
+    println(bst.toString())
 }
