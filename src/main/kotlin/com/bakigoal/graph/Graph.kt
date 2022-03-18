@@ -42,14 +42,16 @@ fun main() {
     val nodes = ArrayList<GraphNode<Int>>()
     val edges = HashSet<Edge<Int>>()
 
-    for (i in 0..4) {
+    for (i in 0..6) {
         nodes.add(GraphNode(i))
     }
     edges.add(Edge(nodes[0], nodes[1]))
     edges.add(Edge(nodes[0], nodes[3]))
     edges.add(Edge(nodes[3], nodes[4]))
     edges.add(Edge(nodes[1], nodes[2]))
+    edges.add(Edge(nodes[1], nodes[5]))
     edges.add(Edge(nodes[2], nodes[3]))
+    edges.add(Edge(nodes[5], nodes[6]))
 
     val graph = Graph(HashSet(nodes), edges)
 
