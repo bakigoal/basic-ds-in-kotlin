@@ -54,6 +54,26 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
         return root
     }
 
+    fun lowestCommonAncestor(nodeValue1: T, nodeValue2: T) =
+        lowestCommonAncestor(root, Node(nodeValue1), Node(nodeValue2))
+
+    private fun lowestCommonAncestor(root: Node<T>?, node1: Node<T>, node2: Node<T>): Node<T>? {
+        if (root == null) {
+            return null
+        }
+
+        val v1 = node1.value
+        val v2 = node2.value
+        val currentValue = root.value
+        return when {
+            currentValue == v1 || currentValue == v2 -> root
+            currentValue >= v1 && currentValue < v2 -> root
+            currentValue >= v2 && currentValue < v1 -> root
+            currentValue > v1 && currentValue > v2 -> lowestCommonAncestor(root.left, node1, node2)
+            else -> lowestCommonAncestor(root.right, node1, node2)
+        }
+    }
+
     fun min() = min(root!!)
 
     private fun min(node: Node<T>): Node<T> {
@@ -88,6 +108,10 @@ fun main() {
     bst.insert(99)
 
     println(bst.toString())
+    println("lowest ancestor (1, 32): ${bst.lowestCommonAncestor(1, 32)?.value}")
+    println("lowest ancestor (77, 33): ${bst.lowestCommonAncestor(77, 33)?.value}")
+    println("lowest ancestor (45, 99): ${bst.lowestCommonAncestor(45, 99)?.value}")
+    println()
 
     bst.delete(42)
     bst.delete(33)
