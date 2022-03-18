@@ -20,3 +20,29 @@ fun <T : Comparable<T>> dfs(
         dfs(adjacent, visited, adjacentListSupplier, action)
     }
 }
+
+fun <T : Comparable<T>> bfs(
+    node: GraphNode<T>,
+    adjacentListSupplier: Function<GraphNode<T>, List<GraphNode<T>>>,
+    action: Consumer<T>
+) {
+    val visited = mutableSetOf<GraphNode<T>>()
+    val queue = ArrayDeque<GraphNode<T>>()
+    queue.addLast(node)
+
+    while (queue.isNotEmpty()) {
+        val size = queue.size
+        for (i in 1..size) {
+            val current = queue.removeFirst()
+            if (visited.contains(current)) {
+                continue
+            }
+            action.accept(current.data)
+            visited += current
+
+            for (adjacent in adjacentListSupplier.apply(current)) {
+                queue.addLast(adjacent)
+            }
+        }
+    }
+}

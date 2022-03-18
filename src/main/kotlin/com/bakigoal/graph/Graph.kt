@@ -20,6 +20,8 @@ data class Graph<T : Comparable<T>>(
     }
 
     fun dfs(action: Consumer<T>) = dfs(nodes.first(), mutableSetOf(), this::adjacentNodes, action)
+
+    fun bfs(action: Consumer<T>) = bfs(nodes.first(), this::adjacentNodes, action)
 }
 
 data class GraphNode<T : Comparable<T>>(
@@ -44,6 +46,7 @@ fun main() {
         nodes.add(GraphNode(i))
     }
     edges.add(Edge(nodes[0], nodes[1]))
+    edges.add(Edge(nodes[1], nodes[2]))
     edges.add(Edge(nodes[2], nodes[4]))
     edges.add(Edge(nodes[2], nodes[3]))
     edges.add(Edge(nodes[3], nodes[4]))
@@ -56,6 +59,8 @@ fun main() {
     val adjacentNodes = graph.adjacentNodes(nodes[1])
     println(adjacentNodes)
 
-    graph.dfs { println("data: $it") }
+    graph.dfs { println("dfs: $it") }
+    println()
+    graph.bfs { println("bfs: $it") }
 }
 
