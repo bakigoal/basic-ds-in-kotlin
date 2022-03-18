@@ -22,6 +22,24 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
             }
         }
     }
+
+    fun inOrderPrint(root: Node<T>?) {
+        if (root == null) {
+            return
+        }
+        inOrderPrint(root.left)
+        print("[ ${root.value} ] ")
+        inOrderPrint(root.right)
+    }
+
+    fun preOrderPrint(root: Node<T>?) {
+        if (root == null) {
+            return
+        }
+        print("[ ${root.value} ] ")
+        inOrderPrint(root.left)
+        inOrderPrint(root.right)
+    }
 }
 
 fun main() {
@@ -29,8 +47,14 @@ fun main() {
     bst.insert(12)
     bst.insert(1)
     bst.insert(45)
+    bst.insert(33)
+    bst.insert(38)
+    bst.insert(98)
     bst.insert(32)
     bst.insert(77)
 
     printTree(bst.root)
+    bst.inOrderPrint(bst.root)
+    println()
+    bst.preOrderPrint(bst.root)
 }
