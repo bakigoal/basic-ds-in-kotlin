@@ -3,7 +3,20 @@ package com.bakigoal.graph
 data class Graph<T : Comparable<T>>(
     val nodes: Set<GraphNode<T>>,
     val edges: Set<Edge<T>>
-)
+) {
+    fun adjacentNodes(node: GraphNode<T>): Set<GraphNode<T>> {
+        val set = HashSet<GraphNode<T>>()
+        for (edge in edges) {
+            if (edge.from == node) {
+                set += edge.to
+            }
+            if (edge.to == node) {
+                set += edge.from
+            }
+        }
+        return set
+    }
+}
 
 data class GraphNode<T : Comparable<T>>(
     val data: T
@@ -36,5 +49,7 @@ fun main() {
     val graph = Graph(HashSet(nodes), edges)
 
     println(graph)
+    val adjacentNodes = graph.adjacentNodes(nodes[1])
+    println(adjacentNodes)
 }
 
