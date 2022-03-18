@@ -1,11 +1,14 @@
 package com.bakigoal.trees
 
 class BinarySearchTree<T : Comparable<T>>(rootData: T) {
-    private val root: Node<T> = Node(rootData)
+    private var root: Node<T>? = Node(rootData)
 
     fun insert(data: T) = insert(root, Node(data))
 
-    private fun insert(root: Node<T>, node: Node<T>) {
+    private fun insert(root: Node<T>?, node: Node<T>) {
+        if (root == null) {
+            return
+        }
         if (node.value > root.value) {
             val right = root.right
             if (right == null) {
@@ -23,33 +26,36 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
         }
     }
 
-    fun delete(value: T) = delete(root, value)
+    fun delete(value: T) {
+        root = delete(root, value)
+    }
 
-    private fun delete(root: Node<T>?, value: T) {
+    private fun delete(root: Node<T>?, value: T): Node<T>? {
         if (root == null) {
-            return
+            return root
         }
 
-        var node = root
-
-        while (true) {
-            when {
-                value < node.value -> delete(root.left, value)
-                value > node.value -> delete(root.right, value)
+        when {
+            value < root.value -> root.left = delete(root.left, value)
+            value > root.value -> root.right = delete(root.right, value)
+            else -> return when {
+                // case 1 : Leaf
+                root.left == null && root.right == null -> null
+                // case 2 : One Child
+                root.left == null -> root.right
+                root.right == null -> root.left
+                // case 3 : Two children
                 else -> {
-                    // case 1: leaf
-                    if (isLeaf(root)) {
-//                        root = null
+                    var minRight: Node<T> = root.right!!
+                    while (minRight.left != null) {
+                        minRight = minRight.left!!
                     }
+                    root.copy(value = minRight.value, right = delete(root.right, minRight.value))
                 }
             }
         }
-
-
-
+        return root
     }
-
-    private fun isLeaf(root: Node<T>) = root.left == null && root.right == null
 
     override fun toString(): String {
         return root.toString()
@@ -66,6 +72,11 @@ fun main() {
     bst.insert(98)
     bst.insert(32)
     bst.insert(77)
+    bst.insert(99)
+
+    println(bst.toString())
+
+    bst.delete(42)
 
     println(bst.toString())
 }
