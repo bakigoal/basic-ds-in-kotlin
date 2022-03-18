@@ -3,7 +3,6 @@ package com.bakigoal.graph
 import java.util.function.Consumer
 import java.util.function.Function
 
-
 fun <T : Comparable<T>> dfs(
     node: GraphNode<T>,
     visited: MutableSet<GraphNode<T>>,
