@@ -74,6 +74,28 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
         }
     }
 
+    fun levelOrderTraversal() = levelOrderTraversal(root)
+
+    private fun levelOrderTraversal(root: Node<T>?) {
+        if (root == null) {
+            return
+        }
+
+        val queue = ArrayDeque<Node<T>>()
+        queue.addLast(root)
+
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            val left = current.left
+            val right = current.right
+
+            println(current.value)
+            if (left != null) queue.addLast(left)
+            if (right != null) queue.addLast(right)
+        }
+
+    }
+
     fun min() = min(root!!)
 
     private fun min(node: Node<T>): Node<T> {
@@ -123,4 +145,5 @@ fun main() {
     println()
     println("min: ${bst.min().value}")
     println("max: ${bst.max().value}")
+    bst.levelOrderTraversal()
 }
