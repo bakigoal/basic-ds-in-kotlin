@@ -26,7 +26,8 @@ data class GraphNode<T : Comparable<T>>(
 
 data class Edge<T : Comparable<T>>(
     val from: GraphNode<T>,
-    val to: GraphNode<T>
+    val to: GraphNode<T>,
+    val weight: Int = 1
 ){
     override fun toString() = "{$from -> $to}"
 }
