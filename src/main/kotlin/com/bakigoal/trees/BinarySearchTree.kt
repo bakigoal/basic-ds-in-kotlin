@@ -78,25 +78,11 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
 
     fun levelOrderTraversal(action: Consumer<T>) = levelOrderTraversal(root, action)
 
-    private fun levelOrderTraversal(root: Node<T>?, action: Consumer<T>) {
-        if (root == null) {
-            return
-        }
+    fun preOrderTraversal(action: Consumer<T>) = preOrderTraversal(root, action)
 
-        val queue = ArrayDeque<Node<T>>()
-        queue.addLast(root)
+    fun inOrderTraversal(action: Consumer<T>) = inOrderTraversal(root, action)
 
-        while (queue.isNotEmpty()) {
-            val current = queue.removeFirst()
-            val left = current.left
-            val right = current.right
-
-            action.accept(current.value)
-            if (left != null) queue.addLast(left)
-            if (right != null) queue.addLast(right)
-        }
-
-    }
+    fun postOrderTraversal(action: Consumer<T>) = postOrderTraversal(root, action)
 
     fun min() = min(root!!)
 
@@ -120,32 +106,30 @@ class BinarySearchTree<T : Comparable<T>>(rootData: T) {
 }
 
 fun main() {
-    val bst = BinarySearchTree(42)
-    bst.insert(12)
+    val bst = BinarySearchTree(4)
+    bst.insert(2)
+    bst.insert(3)
     bst.insert(1)
-    bst.insert(45)
-    bst.insert(33)
-    bst.insert(38)
-    bst.insert(98)
-    bst.insert(32)
-    bst.insert(77)
-    bst.insert(99)
-
-    println(bst.toString())
-    println("lowest ancestor (1, 32): ${bst.lowestCommonAncestor(1, 32)?.value}")
-    println("lowest ancestor (77, 33): ${bst.lowestCommonAncestor(77, 33)?.value}")
-    println("lowest ancestor (45, 99): ${bst.lowestCommonAncestor(45, 99)?.value}")
-    println()
-
-    bst.delete(42)
-    bst.delete(33)
-    bst.delete(99)
-    bst.delete(1)
+    bst.insert(6)
+    bst.insert(5)
+    bst.insert(7)
 
     println(bst.toString())
 
-    println()
     println("min: ${bst.min().value}")
     println("max: ${bst.max().value}")
-    bst.levelOrderTraversal { println("value $it") }
+    println()
+
+    print("level order traversal: ")
+    bst.levelOrderTraversal { print("$it ") }
+    println()
+    print("pre order traversal: ")
+    bst.preOrderTraversal() { print("$it ") }
+    println()
+    print("in order traversal: ")
+    bst.inOrderTraversal() { print("$it ") }
+    println()
+    print("post order traversal: ")
+    bst.postOrderTraversal() { print("$it ") }
+    println()
 }
