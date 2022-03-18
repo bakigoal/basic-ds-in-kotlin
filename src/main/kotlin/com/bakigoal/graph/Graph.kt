@@ -19,25 +19,12 @@ data class Graph<T : Comparable<T>>(
         return list
     }
 
-    fun dfs(action: Consumer<T>) = dfs(nodes.first(), mutableSetOf(), action)
-
-    private fun dfs(node: GraphNode<T>, visited: MutableSet<GraphNode<T>>, action: Consumer<T>) {
-        if (visited.contains(node)){
-            return
-        }
-        visited += node
-
-        action.accept(node.data)
-
-        for (adjacent in adjacentNodes(node)) {
-            dfs(adjacent, visited, action)
-        }
-    }
+    fun dfs(action: Consumer<T>) = dfs(nodes.first(), mutableSetOf(), this::adjacentNodes, action)
 }
 
 data class GraphNode<T : Comparable<T>>(
     val data: T
-){
+) {
     override fun toString() = data.toString()
 }
 
@@ -45,7 +32,7 @@ data class Edge<T : Comparable<T>>(
     val from: GraphNode<T>,
     val to: GraphNode<T>,
     val weight: Int = 1
-){
+) {
     override fun toString() = "{$from -> $to}"
 }
 
@@ -69,6 +56,6 @@ fun main() {
     val adjacentNodes = graph.adjacentNodes(nodes[1])
     println(adjacentNodes)
 
-    graph.dfs{ println("data: $it")}
+    graph.dfs { println("data: $it") }
 }
 
