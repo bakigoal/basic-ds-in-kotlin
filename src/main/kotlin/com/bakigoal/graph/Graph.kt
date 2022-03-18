@@ -1,20 +1,37 @@
 package com.bakigoal.graph
 
+import java.util.function.Consumer
+
 data class Graph<T : Comparable<T>>(
     val nodes: Set<GraphNode<T>>,
     val edges: Set<Edge<T>>
 ) {
-    fun adjacentNodes(node: GraphNode<T>): Set<GraphNode<T>> {
-        val set = HashSet<GraphNode<T>>()
+    fun adjacentNodes(node: GraphNode<T>): List<GraphNode<T>> {
+        val list = ArrayList<GraphNode<T>>()
         for (edge in edges) {
             if (edge.from == node) {
-                set += edge.to
+                list += edge.to
             }
             if (edge.to == node) {
-                set += edge.from
+                list += edge.from
             }
         }
-        return set
+        return list
+    }
+
+    fun dfs(action: Consumer<T>) = dfs(nodes.first(), mutableSetOf(), action)
+
+    private fun dfs(node: GraphNode<T>, visited: MutableSet<GraphNode<T>>, action: Consumer<T>) {
+        if (visited.contains(node)){
+            return
+        }
+        visited += node
+
+        action.accept(node.data)
+
+        for (adjacent in adjacentNodes(node)) {
+            dfs(adjacent, visited, action)
+        }
     }
 }
 
@@ -40,9 +57,8 @@ fun main() {
         nodes.add(GraphNode(i))
     }
     edges.add(Edge(nodes[0], nodes[1]))
-    edges.add(Edge(nodes[1], nodes[2]))
-    edges.add(Edge(nodes[2], nodes[3]))
     edges.add(Edge(nodes[2], nodes[4]))
+    edges.add(Edge(nodes[2], nodes[3]))
     edges.add(Edge(nodes[3], nodes[4]))
     edges.add(Edge(nodes[4], nodes[5]))
     edges.add(Edge(nodes[1], nodes[5]))
@@ -52,5 +68,7 @@ fun main() {
     println(graph)
     val adjacentNodes = graph.adjacentNodes(nodes[1])
     println(adjacentNodes)
+
+    graph.dfs{ println("data: $it")}
 }
 
